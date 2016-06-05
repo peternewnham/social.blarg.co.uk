@@ -80,13 +80,15 @@ exports.getTweets = function twitter(type, config) {
 };
 
 exports.formatTweets = function(tweets, count) {
-  return tweets
-    .map(tweet => ({
-      id: tweet.id,
-      text: getTweetText(tweet),
-      date: moment(tweet.created_at, 'ddd MMM DD HH:mm:ss ZZ YYYY').fromNow(),
-      username: tweet.user.screen_name,
-      name: tweet.user.name
-    }))
-    .slice(0, count)
+  return JSON.stringify(
+    tweets
+      .map(tweet => ({
+        id: tweet.id,
+        text: getTweetText(tweet),
+        date: moment(tweet.created_at, 'ddd MMM DD HH:mm:ss ZZ YYYY').fromNow(),
+        username: tweet.user.screen_name,
+        name: tweet.user.name
+      }))
+      .slice(0, count)
+  );
 };

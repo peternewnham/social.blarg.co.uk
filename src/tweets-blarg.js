@@ -1,4 +1,5 @@
 const { getTweets, formatTweets } = require('./api/twitter');
+const write = require('./write');
 
 const TYPE = 'search/tweets';
 
@@ -12,12 +13,11 @@ const COUNT = 10;
 
 module.exports = function() {
 
-  getTweets(TYPE, CONFIG, COUNT)
-    .then(tweets => {
-      console.log(formatTweets(tweets.statuses))
-    })
+  return getTweets(TYPE, CONFIG, COUNT)
+    .then(tweets => formatTweets(tweets.statuses, COUNT))
+    .then(data => write('tweets-blarg', data))
     .catch(err => {
       console.error(err);
-    })
+    });
 
 };

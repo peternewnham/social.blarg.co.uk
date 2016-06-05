@@ -1,4 +1,5 @@
 const { getTweets, formatTweets } = require('./api/twitter');
+const write = require('./write');
 
 const TYPE = 'statuses/user_timeline';
 
@@ -12,12 +13,11 @@ const COUNT = 3;
 
 module.exports = function() {
 
-  getTweets(TYPE, CONFIG, COUNT)
-    .then(tweets => {
-      console.log(formatTweets(tweets, COUNT));
-    })
+  return getTweets(TYPE, CONFIG, COUNT)
+    .then(tweets => formatTweets(tweets, COUNT))
+    .then(data => write('tweets-mine', data))
     .catch(err => {
       console.error(err);
-    })
+    });
 
 };
